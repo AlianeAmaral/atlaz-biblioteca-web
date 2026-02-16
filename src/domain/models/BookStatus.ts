@@ -1,0 +1,5 @@
+export enum BookStatus {
+  DISPONIVEL = 'DISPONIVEL',
+  EMPRESTADO = 'EMPRESTADO',
+  EM_FALTA = 'EM_FALTA'
+}
