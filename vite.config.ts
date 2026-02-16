@@ -8,7 +8,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [
     vue(),
-    vueDevTools(),
+    // vueDevTools(), // remove o plugin para evitar que o Toggle DevTools seja carregado nas laterais
   ],
   resolve: {
     alias: {
