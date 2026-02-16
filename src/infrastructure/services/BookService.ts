@@ -14,5 +14,5 @@ export class BookService {
     }
     return await response.json();
   }
-  // aqui entram os métodos para criar, atualizar e deletar livros, seguindo a mesma estrutura do método getAllBooks
+  // a seguir os métodos para criar, atualizar e deletar livros, seguindo a mesma estrutura do método getAllBooks
 }
