@@ -71,11 +71,11 @@ onMounted(loadStudent);
         <span class="text-sm text-gray-500">Comprovante de Matrícula</span>
         <div v-if="student.enrollmentProofId" class="mt-2">
           <a
-            :href="`http://localhost:8081/images/${student.enrollmentProofId}/view`"
+            :href="`http://localhost:8081/images/${student.enrollmentProofId}/download`"
             target="_blank"
             class="text-cyan-600 hover:underline"
           >
-            Visualizar comprovante
+            Download do Comprovante
           </a>
         </div>
         <p v-else class="text-gray-400">Não enviado</p>
