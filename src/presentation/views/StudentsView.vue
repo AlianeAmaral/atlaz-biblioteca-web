@@ -6,7 +6,6 @@ import type { Student } from '@/domain/models/Student';
 // instanciação do serviço
 const studentService = new StudentService();
 
-// criação do estado reativo
 const students = ref<Student[]>([]);
 const loading = ref(true);
 
@@ -62,7 +61,7 @@ onMounted(() => {
             <div class="w-12 h-12 ml-10 overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
               <img 
                 v-if="student.imageId"
-                :src="`http://localhost:8081/images/${student.imageId}/view`"
+              :src="`http://localhost:8081/images/${student.imageId}/view`"
                 alt="Foto Aluno"
                 class="w-full h-full object-cover"
               />

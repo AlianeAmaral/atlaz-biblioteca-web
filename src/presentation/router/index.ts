@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/students/create',
       name: 'student-create',
-      component: StudentFormView // reutiliza o mesmo formulário para criar
+      component: StudentFormView // reutiliza o mesmo formulário para criar, rotas fixas primeiro, depois as dinâmicas
     },
     {
       path: '/students/:id',
@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/students/:id/edit',
       name: 'student-edit',
-      component: StudentFormView, // reutiliza o mesmo formulário para editar
+      component: StudentFormView,
       props: true
     }
   ]

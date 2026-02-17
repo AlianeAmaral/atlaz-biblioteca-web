@@ -18,7 +18,7 @@ export class StudentService {
     // a seguir os métodos para criar, atualizar e deletar livros, seguindo a mesma estrutura do método getAllStudents
 
     // busca o aluno por ID (para a tela de detalhes)
-    async getStudentById(id: string): Promise<Student> {
+    async getStudentById(id: number): Promise<Student> {
         const response = await fetch(`${this.baseUrl}/${id}`);
 
         if (!response.ok) {

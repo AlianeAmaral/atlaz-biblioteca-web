@@ -17,7 +17,7 @@ const form = ref({
 
 const loading = ref(false);
 
-// função para converter para Base64 (é necessário para o ImageRequest que está no java)
+// função para converter para Base64 (é necessário para o ImageRequest que está no Java)
 const convertToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
