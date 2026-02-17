@@ -1,9 +1,10 @@
+
 <template>
   <aside>
 
     <div>
       <div>
-        <img src="/img_logo_global_transparent.png" class="w-24" alt="Atlaz Logo" />
+        <img src="/img_logo_global_transparent.png" class="w-40" alt="Atlaz Logo"/>
       </div>
 
       <nav>
@@ -28,6 +29,6 @@
         </router-link>
       </nav>
     </div>
-  </aside>
 
+  </aside>
 </template>
