@@ -28,7 +28,7 @@ export class StudentService {
     }
 
     // cria um novo aluno
-    async createStudent(student: Student): Promise<Student> {
+    async createStudent(student: Omit<Student, 'id'>): Promise<Student> {
         const response = await fetch(this.baseUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,5 +39,26 @@ export class StudentService {
             throw new Error('Erro ao cadastrar aluno');
         }
         return await response.json();
+    }
+
+    // processa upload de fotos
+    async uploadFile(fileName: string, base64Data: string): Promise<string> {
+    const response = await fetch('http://localhost:8081/images/upload', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        
+        body: JSON.stringify({
+            fileName: fileName,
+            base64Data: base64Data
+        })
+    });
+
+        if (!response.ok) {
+            throw new Error('Erro ao fazer upload do arquivo');
+        }
+
+        return await response.text();
     }
 }

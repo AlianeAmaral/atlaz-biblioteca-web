@@ -23,6 +23,6 @@
   @apply p-3 rounded-lg text-gray-400 transition-all hover:bg-gray-800 hover:text-white;
 }
 .router-link-active {
-  @apply bg-cyan-600 text-white font-semibold;
+  @apply bg-cyan-900 text-white font-semibold;
 }
 </style>

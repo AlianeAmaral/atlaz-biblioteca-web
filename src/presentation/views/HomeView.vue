@@ -5,7 +5,7 @@
       <h1 class="text-white font-bold text-3xl mb-4">
         Boas-vindas ao Atlaz Biblioteca!
       </h1>
-      <p class="text-white text-px">
+      <p class="text-white text-px ">
         Clique em uma opção do menu para começar.
       </p>
     </div>
