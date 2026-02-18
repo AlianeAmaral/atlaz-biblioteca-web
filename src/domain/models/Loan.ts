@@ -4,7 +4,7 @@ export interface Loan {
   id: number;
   registration: string;
   bookCode: number;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   loanStatus: LoanStatus
 }

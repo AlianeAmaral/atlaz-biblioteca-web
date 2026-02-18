@@ -29,7 +29,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <h1 class="text-2xl font-bold p-7 bg-cyan-900">Histórico de Empréstimos</h1>
+    <h1 class="text-2xl font-bold p-7 bg-teal-700">Histórico de Empréstimos</h1>
   </div>
 
     <div class="flex justify-start pl-6 pt-6">

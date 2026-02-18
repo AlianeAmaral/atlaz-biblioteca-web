@@ -12,7 +12,8 @@ import BookEditView from '../views/BookEditView.vue'
 import BookFormView from '../views/BookFormView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 
-import LoansReportView from '../views/LoansReportView.vue'
+import LoansView from '../views/LoansView.vue'
+import LoanFormView from '../views/LoanFormView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,9 +34,9 @@ const router = createRouter({
       component: BooksView
     },
     {
-      path: '/reports',
-      name: 'reports',
-      component: LoansReportView
+      path: '/loans',
+      name: 'loans',
+      component: LoansView
     },
     {
       path: '/students/create',
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/books/create',
       name: 'book-create',
       component: BookFormView
+    },
+    {
+      path: '/loans/create',
+      name: 'loan-create',
+      component: LoanFormView
     },
     {
       path: '/students/:id',
