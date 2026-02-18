@@ -40,18 +40,18 @@ onMounted(() => {
       </router-link>
     </div>
 
-  <div class="p-6">
+  <div class="p-6 text-center">
       <div v-if="loading">Carregando...</div>
 
       <table v-else class="min-w-full bg-white text-black rounded-2xl">
         <thead>
           <tr class="bg-cyan-900 text-white">
-            <th class="p-3 text-left">ID</th>
-            <th class="p-3 text-left">Matrícula</th>
-            <th class="p-3 text-left">Código do Livro</th>
-            <th class="p-3 text-left">Data de Início</th>
-            <th class="p-3 text-left">Data de Fim</th>
-            <th class="p-3 text-left">Status</th>
+            <th class="p-3">ID</th>
+            <th class="p-3">Matrícula</th>
+            <th class="p-3">Código do Livro</th>
+            <th class="p-3">Data de Início</th>
+            <th class="p-3">Data de Fim</th>
+            <th class="p-3">Status</th>
           </tr>
         </thead>
 
