@@ -4,6 +4,7 @@ import StudentsView from '../views/StudentsView.vue'
 import StudentDetailView from '../views/StudentDetailView.vue'
 import StudentFormView from '../views/StudentFormView.vue'
 import StudentEditView from '../views/StudentEditView.vue'
+import BooksView from '../views/BooksView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/students',
       name: 'students',
       component: StudentsView
+    },
+    {
+      path: '/books',
+      name: 'books',
+      component: BooksView
     },
     {
       path: '/students/create',
