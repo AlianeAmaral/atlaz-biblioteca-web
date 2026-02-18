@@ -41,6 +41,25 @@ export class StudentService {
         return await response.json();
     }
 
+    // edita um aluno já existente
+    async updateStudent(id: number, student: Partial<Student>): Promise<Student> {
+        const response = await fetch(`${this.baseUrl}/${id}`, {
+            method: 'PATCH', // Alterado de PUT para PATCH
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(student)
+        });
+
+        if (!response.ok) {
+            // Tenta capturar a mensagem de erro detalhada do Java (ex: de uma ExceptionHandler)
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `Erro ${response.status}: Falha ao atualizar aluno`);
+        }
+
+        return await response.json();
+    }
+
     // processa upload de fotos
     async uploadFile(fileName: string, base64Data: string): Promise<string> {
     const response = await fetch('http://localhost:8081/images/upload', {

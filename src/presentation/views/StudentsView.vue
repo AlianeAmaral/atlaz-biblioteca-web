@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { StudentService } from '@/infrastructure/services/StudentService';
 import type { Student } from '@/domain/models/Student';
 
@@ -24,6 +24,7 @@ const loadStudents = async () => {
 onMounted(() => {
   loadStudents();
 });
+
 </script>
 
 <template>

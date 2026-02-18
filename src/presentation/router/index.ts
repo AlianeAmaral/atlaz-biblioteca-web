@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import StudentsView from '../views/StudentsView.vue'
 import StudentDetailView from '../views/StudentDetailView.vue'
-import StudentFormView from '../views/StudentFormView.vue' // tela de criação e edição
+import StudentFormView from '../views/StudentFormView.vue'
+import StudentEditView from '../views/StudentEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,7 +32,7 @@ const router = createRouter({
     {
       path: '/students/:id/edit',
       name: 'student-edit',
-      component: StudentFormView,
+      component: StudentEditView,
       props: true
     }
   ]

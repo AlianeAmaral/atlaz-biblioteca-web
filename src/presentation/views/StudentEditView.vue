@@ -1,15 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { StudentService } from '@/infrastructure/services/StudentService';
 
 import mascotSuccess from '@/presentation/assets/images/img_mascot_success.png';
 import mascotError from '@/presentation/assets/images/img_mascot_error.png';
 
+const route = useRoute();
 const router = useRouter();
 const studentService = new StudentService();
 
-// formulário para criação
+const studentId = Number(route.params.id);
+const loading = ref(true);
+const saving = ref(false);
+
+// controle do modal
+const modal = ref({
+  show: false,
+  isError: false,
+  title: '',
+  message: ''
+});
+
+// formulário reativo
 const form = ref({
   name: '',
   registration: '',
@@ -18,17 +31,26 @@ const form = ref({
   enrollmentProofId: ''
 });
 
-const loading = ref(false);
+// já carrega os dados atuais do aluno para editar o formulário
+const loadStudent = async () => {
+  try {
+    const data = await studentService.getStudentById(studentId);
+    form.value = {
+      name: data.name,
+      registration: data.registration,
+      email: data.email,
+      imageId: data.imageId,
+      enrollmentProofId: data.enrollmentProofId
+    };
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao carregar dados do aluno');
+    router.push('/students');
+  } finally {
+    loading.value = false;
+  }
+};
 
-// controle do modal de resposta à criação de aluno
-const modal = ref({
-  show: false,
-  isError: false,
-  title: '',
-  message: ''
-});
-
-// função para converter para Base64 (é necessário para o ImageRequest que está no Java)
 const convertToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -38,63 +60,56 @@ const convertToBase64 = (file: File): Promise<string> => {
   });
 };
 
-// gerencia o upload quando é selecionado um arquivo
 const handleUpload = async (event: Event, field: 'imageId' | 'enrollmentProofId') => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
-
   if (file) {
     try {
       const base64 = await convertToBase64(file);
-      // chama o StudentService.uploadFile para executar o upload
       const uploadedId = await studentService.uploadFile(file.name, base64);
-      
-      // salva o ID retornado do arquivo no campo correto do formulário
       form.value[field] = uploadedId;
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao subir o arquivo");
+    } catch (error: any) {
+      triggerModal(true, 'Erro no upload', error.response?.data?.message || 'Falha ao subir arquivo');
     }
   }
 };
 
-// disparo do modal
 const triggerModal = (isError: boolean, title: string, message: string) => {
   modal.value = { show: true, isError, title, message };
 };
 
-// salva o aluno e finaliza a operação
-const saveStudent = async () => {
-  loading.value = true;
+const updateStudent = async () => {
+  saving.value = true;
   try {
-    await studentService.createStudent(form.value);
-    // retorno com modal de sucesso
-    triggerModal(false, 'Cadastro Realizado!', 'O aluno foi salvo com sucesso.');
-  } catch (error) {
-    console.error(error);
-    // retorno com modal de erro
-    triggerModal(true, 'Ops, algo deu errado!', 'Não foi possível salvar. Verifique as informações e tente novamente.');
+    // traz o updateStudent do StudentService
+    await studentService.updateStudent(studentId, form.value);
+    triggerModal(false, 'Cadastro Atualizado!', 'Os dados foram atualizados com sucesso.');
+  } catch (error: any) {
+    const msg = error.response?.data?.message || 'Não foi possível atualizar com esses dados.';
+    triggerModal(true, 'Erro na Atualização!', msg);
   } finally {
-    loading.value = false;
+    saving.value = false;
   }
 };
 
 const handleCloseModal = () => {
   const wasError = modal.value.isError;
   modal.value.show = false;
-  
-  // condição que se for sucesso, redireciona para lista de alunos, se for erro, permanece na mesma página
-  if (!wasError) {
-    router.push('/students');
-  }
+
+  // possibilita retornar para o mesmo aluno em caso de erro
+  if (!wasError) router.push(`/students/${studentId}`); 
 };
+
+onMounted(loadStudent);
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold p-6 bg-lime-900 text-white">Cadastrar Novo Aluno</h1>
+  <h1 class="text-2xl font-bold p-6 bg-cyan-900 text-white">Editar Aluno</h1>
 
   <div class="p-8 max-w-2xl text-black">
-    <form @submit.prevent="saveStudent" class="bg-white p-8 rounded-2xl shadow-lg flex flex-col gap-6">
+    <div v-if="loading">Carregando...</div>
+
+    <form @submit.prevent="updateStudent" class="bg-white p-8 rounded-2xl shadow-lg flex flex-col gap-6">
       
       <div class="flex flex-col">
         <label class="font-bold mb-1">Nome Completo</label>
@@ -125,7 +140,7 @@ const handleCloseModal = () => {
 
       <div class="flex gap-4">
         <button type="submit" :disabled="loading" class="flex-1 bg-lime-900 hover:bg-lime-700 text-white font-bold py-3 rounded-lg transition-colors">
-          {{ loading ? 'Salvando...' : 'Finalizar Cadastro' }}
+          {{ loading ? 'Salvando...' : 'Atualizar Cadastro' }}
         </button>
         <button type="button" @click="router.push('/students')" class="flex-1 border border-gray-300 py-3 rounded-lg hover:bg-gray-100">
           Cancelar
