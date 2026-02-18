@@ -64,14 +64,6 @@ onMounted(() => {
           <td class="p-3">{{ loan.startDate }}</td>
           <td class="p-3">{{ loan.endDate }}</td>
           <td class="p-3">{{ loan.loanStatus }}</td>
-          <td class="p-3 text-center">
-            <router-link 
-              :to="`/loans/${loan.id}`" 
-              class="text-cyan-600 hover:underline"
-            >
-              Ver Detalhes
-            </router-link>
-          </td>
         </tr>
       </tbody>
     </table>

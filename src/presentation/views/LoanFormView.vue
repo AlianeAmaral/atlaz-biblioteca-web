@@ -87,7 +87,7 @@ const handleCloseModal = () => {
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold p- bg-teal-700 text-white">Cadastrar Novo Empréstimo</h1>
+  <h1 class="text-2xl font-bold p-7 bg-teal-700 text-white">Cadastrar Novo Empréstimo</h1>
 
   <div class="p-8 max-w-2xl text-black">
     <form @submit.prevent="saveLoan" class="bg-white p-8 rounded-2xl shadow-lg flex flex-col gap-6">
