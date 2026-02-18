@@ -1,11 +1,11 @@
 <script setup lang="ts">
+
 import { ref, onMounted, computed } from 'vue';
 import { BookService } from '@/infrastructure/services/BookService';
 import type { Book } from '@/domain/models/Book';
 
 // instanciação do serviço
 const bookService = new BookService();
-
 const books = ref<Book[]>([]);
 const loading = ref(true);
 
@@ -51,42 +51,43 @@ const filteredStudents = computed(() => {
   <div class="flex justify-between items-center pl-6 pr-6 pt-6">
     <router-link 
       to="/books/create" 
-      class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md"
-    >
+      class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md">
       Cadastrar Novo Livro
     </router-link>
 
-    <input
-        v-model="search"
+    <input v-model="search"
         type="text"
         placeholder="Busca por livro..."
-        class="text-black border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-      />
+        class="text-black border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-cyan-600"/>
     </div>
 
-  <div class="p-6"> <div v-if="loading" class="text-center font-bold text-white">Carregando...</div>
+  <div class="p-6"> 
+
+    <div v-if="loading" 
+      class="text-center font-bold text-white">
+      Carregando...
+    </div>
 
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       
-      <div 
-        v-for="book in filteredStudents" 
+      <div v-for="book in filteredStudents" 
         :key="book.id" 
-        class="bg-black rounded-2xl shadow-md hover:shadow-xl transition-shadow p-5 flex flex-col items-center h-full border border-gray-800"
-      >
+        class="bg-black rounded-2xl shadow-md hover:shadow-xl transition-shadow p-5 flex flex-col items-center h-full border border-gray-800">
         
         <div class="w-44 h-60 mb-4 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
-          <img 
-            v-if="book.imageId"
+          
+          <img v-if="book.imageId"
             :src="`http://localhost:8081/images/${book.imageId}/view`"
             alt="Capa Livro"
-            class="w-full h-full object-cover" 
+            class="w-full h-full object-cover"
           />
+
           <span v-else class="text-gray-400 text-sm font-medium">Sem Foto</span>
         </div>
 
         <span class="text-xs text-gray-400 my-1 bg-gray-900 px-3 py-1 rounded-full border border-gray-700">
-            Cód: {{ book.bookCode }}
-          </span>
+          Cód: {{ book.bookCode }}
+        </span>
 
         <div class="flex flex-col items-center text-center w-full flex-1 w-44">
           <h3 class="text-1xl font-bold text-white w-full line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
@@ -103,10 +104,10 @@ const filteredStudents = computed(() => {
 
           <router-link 
             :to="`/books/${book.id}`" 
-            class="w-full py-2 bg-cyan-900 text-white rounded-lg font-bold hover:bg-cyan-700 transition-colors text-center mt-auto"
-          >
+            class="w-full py-2 bg-cyan-900 text-white rounded-lg font-bold hover:bg-cyan-700 transition-colors text-center mt-auto">
             Ver Detalhes
           </router-link>
+          
         </div>
       </div>
     </div>

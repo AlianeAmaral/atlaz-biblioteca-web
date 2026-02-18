@@ -3,21 +3,26 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 import StudentsView from '../views/StudentsView.vue'
-import StudentDetailView from '../views/StudentDetailView.vue'
 import StudentFormView from '../views/StudentFormView.vue'
 import StudentEditView from '../views/StudentEditView.vue'
+import StudentDetailView from '../views/StudentDetailView.vue'
 
 import BooksView from '../views/BooksView.vue'
-import BookEditView from '../views/BookEditView.vue'
 import BookFormView from '../views/BookFormView.vue'
+import BookEditView from '../views/BookEditView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 
 import LoansView from '../views/LoansView.vue'
 import LoanFormView from '../views/LoanFormView.vue'
 
+// primeiro rotas fixas e depois dinâmicas
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
+    // rotas fixas
+    
     {
       path: '/',
       name: 'home',
@@ -41,7 +46,7 @@ const router = createRouter({
     {
       path: '/students/create',
       name: 'student-create',
-      component: StudentFormView // reutiliza o mesmo formulário para criar, rotas fixas primeiro, depois as dinâmicas
+      component: StudentFormView
     },
     {
       path: '/books/create',
@@ -53,11 +58,14 @@ const router = createRouter({
       name: 'loan-create',
       component: LoanFormView
     },
+
+    // rotas dinâmicas, aqui pode passar a receber o ID como prop no componente no props = true
+
     {
       path: '/students/:id',
       name: 'student-detail',
       component: StudentDetailView,
-      props: true // recebe o ID como prop no componente
+      props: true
     },
     {
       path: '/books/:id',

@@ -1,13 +1,28 @@
 <script setup lang="ts">
+
 import { ref, onMounted, computed } from 'vue';
 import { StudentService } from '@/infrastructure/services/StudentService';
 import type { Student } from '@/domain/models/Student';
 
 // instanciação do serviço
 const studentService = new StudentService();
-
 const students = ref<Student[]>([]);
 const loading = ref(true);
+
+// lógica para campo de pesquisa
+const search = ref('');
+
+const filteredStudents = computed(() => {
+  if (!search.value) return students.value;
+
+  const term = search.value.toLowerCase();
+
+  return students.value.filter(student =>
+    student.name.toLowerCase().includes(term) ||
+    student.registration.toLowerCase().includes(term) ||
+    student.email.toLowerCase().includes(term)
+  );
+});
 
 // método de busca dos dados
 const loadStudents = async () => {
@@ -25,21 +40,6 @@ onMounted(() => {
   loadStudents();
 });
 
-// lógica para campo de pesquisa
-const search = ref('');
-
-const filteredStudents = computed(() => {
-  if (!search.value) return students.value;
-
-  const term = search.value.toLowerCase();
-
-  return students.value.filter(student =>
-    student.name.toLowerCase().includes(term) ||
-    student.registration.toLowerCase().includes(term) ||
-    student.email.toLowerCase().includes(term)
-  );
-});
-
 </script>
 
 <template>
@@ -48,47 +48,49 @@ const filteredStudents = computed(() => {
   </div>
 
     <div class="flex justify-between items-center pl-6 pr-6 pt-6">
+
       <router-link 
         to="/students/create" 
-        class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md"
-      >
-        <span class="text-xl"></span>
+        class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md">
         Cadastrar Novo Aluno
       </router-link>
 
-      <input
-        v-model="search"
+      <input v-model="search"
         type="text"
         placeholder="Busca por aluno..."
         class="text-black border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-cyan-600"
       />
+
     </div>
 
   <div class="p-6">
-      <div v-if="loading">Carregando...</div>
+    <div v-if="loading">Carregando...</div>
 
       <table v-else class="min-w-full bg-white text-black rounded-2xl">
+        
         <thead>
           <tr class="bg-cyan-900 text-white">
-          <th class="p-3 text-left"></th>
-          <th class="p-3 text-left">Nome</th>
-          <th class="p-3 text-left">Matrícula</th>
-          <th class="p-3 text-left">E-mail</th>
-          <th class="p-3 text-center">Ações</th>
-        </tr>
-      </thead>
+            <th class="p-3 text-left"></th>
+            <th class="p-3 text-left">Nome</th>
+            <th class="p-3 text-left">Matrícula</th>
+            <th class="p-3 text-left">E-mail</th>
+            <th class="p-3 text-center">Ações</th>
+          </tr>
+        </thead>
+
       <tbody>
         <tr v-for="student in filteredStudents" :key="student.id" class="border-t">
-          
-          <td class="p-4">
+          <td class="p-4"> 
             <div class="w-12 h-12 ml-10 overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
-              <img 
-                v-if="student.imageId"
-              :src="`http://localhost:8081/images/${student.imageId}/view`"
+              
+              <img v-if="student.imageId"
+                :src="`http://localhost:8081/images/${student.imageId}/view`"
                 alt="Foto Aluno"
                 class="w-full h-full object-cover"
               />
+
               <span v-else class="text-gray-400 text-xs text-center flex justify-center items-center">Sem foto</span>
+
             </div>
           </td>
           
@@ -98,13 +100,13 @@ const filteredStudents = computed(() => {
           <td class="p-3 text-center">
             <router-link 
               :to="`/students/${student.id}`" 
-              class="text-cyan-600 hover:underline"
-            >
+              class="text-cyan-600 hover:underline">
               Ver Detalhes
             </router-link>
           </td>
         </tr>
       </tbody>
+      
     </table>
   </div>
 </template>

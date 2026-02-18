@@ -44,7 +44,7 @@ export class StudentService {
     // edita um aluno já existente
     async updateStudent(id: number, student: Partial<Student>): Promise<Student> {
         const response = await fetch(`${this.baseUrl}/${id}`, {
-            method: 'PATCH', // Alterado de PUT para PATCH
+            method: 'PATCH', // alterado de PUT para PATCH
             headers: { 
                 'Content-Type': 'application/json' 
             },
@@ -52,7 +52,7 @@ export class StudentService {
         });
 
         if (!response.ok) {
-            // Tenta capturar a mensagem de erro detalhada do Java (ex: de uma ExceptionHandler)
+            // tenta capturar a mensagem de erro detalhada do back-end (ex: de uma ExceptionHandler)
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.message || `Erro ${response.status}: Falha ao atualizar aluno`);
         }
