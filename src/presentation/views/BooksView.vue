@@ -66,12 +66,16 @@ onMounted(() => {
           </span>
 
         <div class="flex flex-col items-center text-center w-full flex-1 w-44">
-          <h3 class="text-1xl font-bold text-white w-full line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
+          <h3 class="text-1xl font-bold text-white w-full line-clamp-2 py-2 flex items-center justify-center">
             {{ book.title }}
           </h3>
 
-          <h3 class="text-sm text-emerald-400 w-full line-clamp-2 pb-5 flex items-center justify-center">
+          <h3 class="text-sm text-emerald-400 w-full line-clamp-2 pb-4 flex items-center justify-center">
             {{ book.author }}
+          </h3>
+
+          <h3 class="text-gray-400 text-xs white w-auto line-clamp-2 mb-4 px-3 py-1 flex items-center justify-center border rounded-2xl">
+            {{ book.bookStatus }}
           </h3>
 
           <router-link 
