@@ -25,6 +25,21 @@ onMounted(() => {
   loadStudents();
 });
 
+// lógica para campo de pesquisa
+const search = ref('');
+
+const filteredStudents = computed(() => {
+  if (!search.value) return students.value;
+
+  const term = search.value.toLowerCase();
+
+  return students.value.filter(student =>
+    student.name.toLowerCase().includes(term) ||
+    student.registration.toLowerCase().includes(term) ||
+    student.email.toLowerCase().includes(term)
+  );
+});
+
 </script>
 
 <template>
@@ -32,7 +47,7 @@ onMounted(() => {
     <h1 class="text-2xl font-bold p-7 bg-cyan-900">Alunos</h1>
   </div>
 
-    <div class="flex justify-start pl-6 pt-6">
+    <div class="flex justify-between items-center pl-6 pr-6 pt-6">
       <router-link 
         to="/students/create" 
         class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md"
@@ -40,6 +55,13 @@ onMounted(() => {
         <span class="text-xl"></span>
         Cadastrar Novo Aluno
       </router-link>
+
+      <input
+        v-model="search"
+        type="text"
+        placeholder="Busca por aluno..."
+        class="text-black border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+      />
     </div>
 
   <div class="p-6">
@@ -56,7 +78,7 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="student in students" :key="student.id" class="border-t">
+        <tr v-for="student in filteredStudents" :key="student.id" class="border-t">
           
           <td class="p-4">
             <div class="w-12 h-12 ml-10 overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">

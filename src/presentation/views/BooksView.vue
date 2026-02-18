@@ -25,6 +25,22 @@ onMounted(() => {
   loadBooks();
 });
 
+// lógica para campo de pesquisa
+const search = ref('');
+
+const filteredStudents = computed(() => {
+  if (!search.value) return books.value;
+
+  const term = search.value.toLowerCase();
+
+  return books.value.filter(book =>
+    book.bookCode.toString().includes(term) ||
+    book.title.toLowerCase().includes(term) ||
+    book.author.toLowerCase().includes(term) ||
+    book.genre.toLowerCase().includes(term)
+  );
+});
+
 </script>
 
 <template>
@@ -32,21 +48,28 @@ onMounted(() => {
     <h1 class="text-2xl font-bold p-7 bg-cyan-900 text-white">Livros</h1>
   </div>
 
-  <div class="flex justify-start pl-6 pt-6">
+  <div class="flex justify-between items-center pl-6 pr-6 pt-6">
     <router-link 
       to="/books/create" 
       class="flex items-center bg-lime-700 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md"
     >
       Cadastrar Novo Livro
     </router-link>
-  </div>
+
+    <input
+        v-model="search"
+        type="text"
+        placeholder="Busca por livro..."
+        class="text-black border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+      />
+    </div>
 
   <div class="p-6"> <div v-if="loading" class="text-center font-bold text-white">Carregando...</div>
 
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       
       <div 
-        v-for="book in books" 
+        v-for="book in filteredStudents" 
         :key="book.id" 
         class="bg-black rounded-2xl shadow-md hover:shadow-xl transition-shadow p-5 flex flex-col items-center h-full border border-gray-800"
       >
