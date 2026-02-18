@@ -45,10 +45,10 @@ onMounted(loadStudent);
           <img
             v-if="student.imageId"
             :src="`http://localhost:8081/images/${student.imageId}/view`"
-            alt="Foto do aluno"
+            alt="Foto do Aluno"
             class="w-full h-full object-cover"
           />
-          <span v-else class="text-gray-400 text-sm">Sem foto</span>
+          <span v-else class="text-gray-400 text-sm">Sem Foto</span>
         </div>
       </div>
 
