@@ -9,6 +9,7 @@ import StudentEditView from '../views/StudentEditView.vue'
 
 import BooksView from '../views/BooksView.vue'
 import BookEditView from '../views/BookEditView.vue'
+import BookFormView from '../views/BookFormView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 
 const router = createRouter({
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/students/create',
       name: 'student-create',
       component: StudentFormView // reutiliza o mesmo formulário para criar, rotas fixas primeiro, depois as dinâmicas
+    },
+    {
+      path: '/books/create',
+      name: 'book-create',
+      component: BookFormView
     },
     {
       path: '/students/:id',
