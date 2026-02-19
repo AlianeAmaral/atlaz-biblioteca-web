@@ -66,7 +66,7 @@ onMounted(() => {
   <div class="p-6">
     <div v-if="loading">Carregando...</div>
 
-      <table v-else class="min-w-full bg-white text-black rounded-2xl">
+      <table v-else class="min-w-full bg-gray-100 text-black rounded-2xl">
         
         <thead>
           <tr class="bg-cyan-900 text-white">
@@ -80,8 +80,8 @@ onMounted(() => {
 
       <tbody>
         <tr v-for="student in filteredStudents" :key="student.id" class="border-t">
-          <td class="p-4"> 
-            <div class="w-12 h-12 ml-10 overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
+          <td class="py-2"> 
+            <div class="w-12 h-12 ml-10 overflow-hidden border rounded-full border-gray-200 bg-gray-100 flex items-center justify-center">
               
               <img v-if="student.imageId"
                 :src="`http://localhost:8081/images/${student.imageId}/view`"

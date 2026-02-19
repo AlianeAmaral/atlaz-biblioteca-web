@@ -32,7 +32,7 @@ onMounted(loadStudent);
 </script>
 
 <template>
-  <h1 class="text-2xl font-bold p-6 bg-cyan-900 text-white">Detalhes do Aluno</h1>
+  <h1 class="text-2xl font-bold p-7 bg-cyan-900 text-white">Detalhes do Aluno</h1>
 
   <div class="p-8 max-w-2xl text-black">
 
