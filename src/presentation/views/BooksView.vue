@@ -103,7 +103,7 @@ const filteredStudents = computed(() => {
             <p v-else>Seu navegador não suporta a área de transferência.</p>
         </span>
 
-        <div class="flex flex-col items-center text-center w-full flex-1 w-44">
+        <div class="flex flex-col items-center text-center flex-1 w-44">
           <h3 class="text-1xl font-bold text-white w-full line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
             {{ book.title }}
           </h3>
