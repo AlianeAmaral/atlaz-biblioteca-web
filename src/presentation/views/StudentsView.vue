@@ -89,7 +89,7 @@ onMounted(() => {
                 class="w-full h-full object-cover"
               />
 
-              <span v-else class="text-gray-400 text-xs text-center flex justify-center items-center">Sem foto</span>
+              <span v-else class="text-gray-400 text-xs text-center flex justify-center items-center">Sem Foto</span>
 
             </div>
           </td>

@@ -22,7 +22,7 @@ const statusOptions = [
   { label: 'Emprestado', value: 'EMPRESTADO' },
   { label: 'Devolvido (Dentro do Prazo)', value: 'FINALIZADO_DENTRO_DO_PRAZO' },
   { label: 'Devolvido (Fora do Prazo)', value: 'FINALIZADO_FORA_DO_PRAZO' },
-  { label: 'Devolção Atrasada', value: 'ATRASADO' },
+  { label: 'Devolução Atrasada', value: 'ATRASADO' },
   { label: 'Perdido', value: 'PERDIDO' },
 ];
 

@@ -3,6 +3,9 @@
 import { ref, onMounted, computed } from 'vue';
 import { BookService } from '@/infrastructure/services/BookService';
 import type { Book } from '@/domain/models/Book';
+import { useClipboard } from '@vueuse/core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faClone } from '@fortawesome/free-regular-svg-icons'
 
 // instanciação do serviço
 const bookService = new BookService();
@@ -24,6 +27,9 @@ const loadBooks = async () => {
 onMounted(() => {
   loadBooks();
 });
+
+// script para uso do clipboard
+const { copy, copied, isSupported } = useClipboard()
 
 // lógica para campo de pesquisa
 const search = ref('');
@@ -85,8 +91,16 @@ const filteredStudents = computed(() => {
           <span v-else class="text-gray-400 text-sm font-medium">Sem Foto</span>
         </div>
 
-        <span class="text-xs text-gray-400 my-1 bg-gray-900 px-3 py-1 rounded-full border border-gray-700">
+        <span class="text-xs text-gray-400 my-1 bg-gray-900 px-3 py-1.5 rounded-full border border-gray-700 flex ">
           Cód: {{ book.bookCode }}
+          
+          <div v-if="isSupported">
+            <button class="pl-1" @click="copy(book.bookCode.toString())">
+              <span v-if="!copied"><FontAwesomeIcon :icon="faClone"/></span>
+              <span v-else class="transition duration-200 ease-out active:text-lime-400"><FontAwesomeIcon :icon="faClone"/></span>
+            </button>
+          </div>
+            <p v-else>Seu navegador não suporta a área de transferência.</p>
         </span>
 
         <div class="flex flex-col items-center text-center w-full flex-1 w-44">
@@ -113,3 +127,4 @@ const filteredStudents = computed(() => {
     </div>
   </div>
 </template>
+
