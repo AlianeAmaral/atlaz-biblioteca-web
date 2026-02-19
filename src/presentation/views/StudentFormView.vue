@@ -3,8 +3,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { StudentService } from '@/infrastructure/services/StudentService';
-import mascotSuccess from '@/presentation/assets/images/img_mascot_success.png';
-import mascotError from '@/presentation/assets/images/img_mascot_error.png';
+import BaseModal from '@/presentation/components/BaseModal.vue';
 
 const router = useRouter();
 const loading = ref(false);
@@ -26,6 +25,11 @@ const modal = ref({
   title: '',
   message: ''
 });
+
+// disparo do modal
+const triggerModal = (isError: boolean, title: string, message: string) => {
+  modal.value = { show: true, isError, title, message };
+};
 
 // função para converter para Base64 (é necessário para o ImageRequest que está no Java)
 const convertToBase64 = (file: File): Promise<string> => {
@@ -57,32 +61,27 @@ const handleUpload = async (event: Event, field: 'imageId' | 'enrollmentProofId'
   }
 };
 
-// disparo do modal
-const triggerModal = (isError: boolean, title: string, message: string) => {
-  modal.value = { show: true, isError, title, message };
-};
-
 // salva o aluno e finaliza a operação
 const saveStudent = async () => {
   loading.value = true;
   try {
     await studentService.createStudent(form.value);
-    // retorno com modal de sucesso
-    triggerModal(false, 'Cadastro Realizado!', 'O aluno foi salvo com sucesso.');
+      // retorno com modal de sucesso
+      triggerModal(false, 'Cadastro Realizado!', 'O aluno foi salvo com sucesso.');
   } catch (error) {
     console.error(error);
-    // retorno com modal de erro
-    triggerModal(true, 'Ops, algo deu errado!', 'Não foi possível salvar. Verifique as informações e tente novamente.');
+      // retorno com modal de erro
+      triggerModal(true, 'Ops, algo deu errado!', 'Não foi possível salvar. Verifique as informações e tente novamente.');
   } finally {
-    loading.value = false;
+      loading.value = false;
   }
 };
 
+// redirecionamento ao fechar, condição que se for sucesso, vai para lista de alunos, se for erro, permanece na mesma página
 const handleCloseModal = () => {
   const wasError = modal.value.isError;
   modal.value.show = false;
   
-  // condição que se for sucesso, redireciona para lista de alunos, se for erro, permanece na mesma página
   if (!wasError) {
     router.push('/students');
   }
@@ -170,31 +169,11 @@ const handleCloseModal = () => {
     </form>
   </div>
 
-  <div v-if="modal.show" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-    <div class="bg-[#080808] p-8 rounded-3xl shadow-2xl flex flex-col items-center max-w-sm w-full border-t-8" 
-         :class="modal.isError ? 'border-red-500' : 'border-lime-600'">
-      
-      <img :src="modal.isError ? mascotError : mascotSuccess" 
-        class="w-40 h-40 mb-4 object-contain"
-        alt="Mascote"
-      />
-      
-      <h2 class="text-2xl font-black mb-2 text-center" 
-          :class="modal.isError ? 'text-red-600' : 'text-lime-900'">
-        {{ modal.title }}
-      </h2>
-      
-      <p class="text-gray-600 text-center mb-6 font-medium">
-        {{ modal.message }}
-      </p>
-      
-      <button 
-        @click="handleCloseModal"
-        class="w-full text-white font-bold py-3 px-4 rounded-xl transition-transform active:scale-95 shadow-lg"
-        :class="modal.isError ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-900 hover:bg-lime-800'">
-        {{ modal.isError ? 'Tentar Novamente' : 'Continuar' }}
-      </button>
-
-    </div>
-  </div>
+  <BaseModal
+    :show="modal.show"
+    :isError="modal.isError"
+    :title="modal.title"
+    :message="modal.message"
+    @close="handleCloseModal"
+  />
 </template>
